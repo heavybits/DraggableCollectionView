@@ -267,7 +267,11 @@ typedef NS_ENUM(NSInteger, _ScrollingDirection) {
                 [self.collectionView moveItemAtIndexPath:self.layoutHelper.fromIndexPath toIndexPath:self.layoutHelper.toIndexPath];
                 self.layoutHelper.fromIndexPath = nil;
                 self.layoutHelper.toIndexPath = nil;
-            } completion:nil];
+            } completion:^(BOOL finished) {
+              if (finished) {
+                [self.collectionView reloadData];
+              }
+            }];
             
             // Switch mock for cell
             UICollectionViewLayoutAttributes *layoutAttributes = [self.collectionView layoutAttributesForItemAtIndexPath:self.layoutHelper.hideIndexPath];
